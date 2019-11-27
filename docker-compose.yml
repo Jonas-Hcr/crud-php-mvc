@@ -1,0 +1,40 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    mysql:
+      image: mysql:8.0
+      container_name: irroba-mysql
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./public/script.sql:/docker-entrypoint-initdb.d/docker-dump.sql
+      command: --default-authentication-plugin=mysql_native_password --sql-mode=NO_ENGINE_SUBSTITUTION --join-buffer-size=2M --table-open-cache=400 --open-files-limit=1000
+      environment:
+        - MYSQL_ROOT_PASSWORD=rootpass
+        - MYSQL_DATABASE=crudirroba
+        - MYSQL_USER=crudirroba
+        - MYSQL_PASSWORD=userpass
+      ports:
+        - "8002:3306"
+
+    webserver:
+      image: nginx:alpine
+      container_name: irroba-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8000:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: irroba-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+
