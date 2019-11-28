@@ -1,8 +1,5 @@
 # CRUD-MVC-PHP
 Crud em MVC e PHP
-### Objetivo: 
-
->Desenvolver um sistema CRUD simples em PHP 5 ou 7 (sem frameworks) e MySQL para a administração de livros de uma loja.
 
 ### Detalhes:
 
@@ -39,3 +36,11 @@ No diretório "controller" estão os arquivos PHP que executam as funcionalidade
 No diretório "model" estão os arquivos de conexão com o Banco de Dados
 
 O arquivo script.sql é o scrip em sql que cria o banco e a tabela.
+
+### Docker:
+
+Para rodar o projeto utilizando o docker, executar o seguinte comando:
+
+```
+docker-compose up -d
+```
